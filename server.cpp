@@ -1,4 +1,5 @@
 #include <arpa/inet.h>
+#include <getopt.h>
 #include <netdb.h>
 #include <netinet/in.h>
 #include <sys/epoll.h>
@@ -43,8 +44,21 @@ void sendData(const std::string& answer, const int fd)
   }
 }
 
-int main()
+int main(int argc, char** argv)
 {
+  int c = 0;
+  char* port = nullptr;
+  while ((c = getopt(argc, argv, "p:")) != -1) {
+    switch (c) {
+    case 'p':
+      port = optarg;
+      break;
+    default:
+      std::cerr << "Error argument!" << std::endl;
+      return EXIT_FAILURE;
+    }
+  }
+
   /***** server *****/
   struct addrinfo hints;
   struct addrinfo *result, *rp;
@@ -60,8 +74,7 @@ int main()
   hints.ai_next = nullptr;
 
   {
-    std::string service = std::to_string(9884);
-    int gai_return_code = getaddrinfo(nullptr, service.c_str(), &hints, &result);
+    int gai_return_code = getaddrinfo(nullptr, port, &hints, &result);
     if (gai_return_code != 0) {
       std::cerr << "getaddrinfo: " << gai_strerror(gai_return_code) << std::endl;
       return EXIT_FAILURE;

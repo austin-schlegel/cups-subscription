@@ -19,7 +19,7 @@
 
 	GROUP subscription-attributes-tag
 	ATTR uri notify-recipient-uri $recipient
-	ATTR keyword notify-events printer-added,printer-deleted
+	ATTR keyword notify-events all
 
 	# What statuses are OK?
 	STATUS successful-ok

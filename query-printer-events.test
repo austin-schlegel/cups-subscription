@@ -1,0 +1,15 @@
+# Query support printer events
+#
+# Usage:
+#   ipptool -d uri=ipp://localhost:631/printers/<Printer Name>  query-printer-events.test 
+{
+    NAME "Query supported events"
+    OPERATION Get-Printer-Attributes
+    GROUP operation-attributes-tag
+    ATTR charset attributes-charset utf-8
+    ATTR language attributes-natural-language en
+    ATTR uri printer-uri $uri
+    ATTR keyword requested-attributes notify-events-supported
+    STATUS successful-ok
+    DISPLAY notify-events-supported
+}

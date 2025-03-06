@@ -1,0 +1,25 @@
+# Create a printer subscription to monitor errors
+#
+# Usage:
+#   ipptool -v -d recipient=recipient-uri ipp://localhost:631/printers/PrinterName create-printer-state-changed-subscription.test
+{
+    NAME "Monitor Printer Errors"
+    OPERATION Create-Printer-Subscription
+
+    # Attributes to send
+    GROUP operation-attributes-tag
+    ATTR charset attributes-charset utf-8
+    ATTR language attributes-natural-language en
+    ATTR uri printer-uri $uri
+
+    GROUP subscription-attributes-tag
+    ATTR uri notify-recipient-uri $recipient
+    ATTR keyword notify-events printer-state-changed
+
+    # Expect a successful response
+    STATUS successful-ok
+
+    # Display the subscription ID
+    EXPECT notify-subscription-id OF-TYPE integer WITH-VALUE >0
+    DISPLAY notify-subscription-id
+}

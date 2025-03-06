@@ -1,0 +1,27 @@
+# Query a list of CUPS printers and their URIs
+#
+# Usage:
+#   ipptool -v ipp://localhost:631/printers/<Printer Name> get-cups-printers.test
+{
+    # Name of the test
+    NAME "Get CUPS Printers with URIs"
+
+    # Operation to perform
+    OPERATION CUPS-Get-Printers
+
+    # Attributes to send
+    GROUP operation-attributes-tag
+    ATTR charset attributes-charset utf-8
+    ATTR language attributes-natural-language en
+    ATTR uri printer-uri ipp://localhost:631/printers/
+
+    # Request specific attributes
+    ATTR keyword requested-attributes printer-uri-supported,printer-name
+
+    # Expect a successful response
+    STATUS successful-ok
+
+    # Display the printer URIs and names
+    DISPLAY printer-uri-supported
+    DISPLAY printer-name
+}
